@@ -20,6 +20,6 @@ public abstract class CustomBehavior {
     public void exit() {
     }
 
-    public abstract void update();
+    public abstract void tick();
 
 }

@@ -71,7 +71,7 @@ public abstract class CustomBoss extends BossScheduler {
         this.tick();
 
         if (this.currentBehavior != null && !this.hitbox.getSlime().isInvulnerable()) {
-            currentBehavior.update();
+            currentBehavior.tick();
         }
     }
 
