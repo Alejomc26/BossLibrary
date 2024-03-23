@@ -1,13 +1,32 @@
 plugins {
     id("java")
+    id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.2.3"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "io.github.alejomc26"
+version = "1.0"
 
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+}
+
+signing {
+    useGpgCmd()
+}
+
+centralPortal {
+    pom {
+        name = "Boss Library"
+        description = "Library for minecraft plugin developers (Paper api only)"
+        url = "https://github.com/Alejomc26/BossLibrary"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+    }
 }
 
 dependencies {
