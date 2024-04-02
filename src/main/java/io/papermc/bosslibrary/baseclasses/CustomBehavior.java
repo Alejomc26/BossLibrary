@@ -1,6 +1,4 @@
-package io.papermc.bosslibrary.behavior;
-
-import io.papermc.bosslibrary.custom_entities.CustomBoss;
+package io.papermc.bosslibrary.baseclasses;
 
 public abstract class CustomBehavior {
 

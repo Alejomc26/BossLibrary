@@ -1,38 +1,46 @@
-package io.papermc.bosslibrary.custom_entities;
+package io.papermc.bosslibrary.baseclasses;
 
-import io.papermc.bosslibrary.displays.DisplayBuilder;
-import io.papermc.bosslibrary.schedulers.ProjectileScheduler;
+import io.papermc.bosslibrary.BossLibraryManager;
+import io.papermc.bosslibrary.builders.DisplayBuilder;
+import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public abstract class CustomProjectile extends ProjectileScheduler {
+public abstract class CustomProjectile{
 
     private final DisplayBuilder display;
     private final Location spawnLocation;
     private final double contactDamage;
     private double radius = 0.4;
+    private final ScheduledTask task;
+
     public CustomProjectile(Location start, double contactDamage) {
+        GlobalRegionScheduler globalScheduler = Bukkit.getGlobalRegionScheduler();
+        this.task = globalScheduler.runAtFixedRate(BossLibraryManager.getMainInstance(), scheduledTask -> this.update(), 1, 1);
         this.spawnLocation = start.clone();
         this.contactDamage = contactDamage;
         this.display = new DisplayBuilder(start);
         this.atLaunch();
     }
 
-    @Override
     public void update() {
         Location currentLocation = this.display.getLocation();
         Block block = currentLocation.getBlock();
 
         if (block.getType() != Material.AIR) {
             this.touchBlock();
-            this.cancel();
+            this.stop();
+            this.task.cancel();
             return;
         }
 
         if (currentLocation.distanceSquared(spawnLocation) > 2500) { //Distance from spawn location is greater than 50
-            this.cancel();
+            this.stop();
+            this.task.cancel();
             return;
         }
 
@@ -50,7 +58,6 @@ public abstract class CustomProjectile extends ProjectileScheduler {
         return this.display;
     }
 
-    @Override
     public void stop() {
         this.display.remove();
     }
