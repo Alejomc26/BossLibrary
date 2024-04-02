@@ -9,21 +9,21 @@ Maven
 <dependency>
     <groupId>io.github.alejomc26</groupId>
     <artifactId>BossLibrarySource</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ````
 
 Gradle
 ````gradle
 dependencies {
-    implementation("io.github.alejomc26:BossLibrarySource:1.1")
+    implementation("io.github.alejomc26:BossLibrarySource:1.2")
 }
 ````
 
 plugin.yml
 ````yml
 libraries:
-  - io.github.alejomc26:BossLibrarySource:1.1
+  - io.github.alejomc26:BossLibrarySource:1.2
 ````
 
 Inside your onEnable method add 
