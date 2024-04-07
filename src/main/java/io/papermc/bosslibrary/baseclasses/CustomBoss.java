@@ -1,86 +1,88 @@
 package io.papermc.bosslibrary.baseclasses;
 
-import io.papermc.bosslibrary.BossLibraryManager;
-import io.papermc.bosslibrary.builders.BoneBuilder;
-import io.papermc.bosslibrary.managers.BossBehaviorManager;
-import io.papermc.bosslibrary.managers.BossHealthBarManager;
-import io.papermc.bosslibrary.managers.BossHealthManager;
-import io.papermc.paper.threadedregions.scheduler.EntityScheduler;
+import com.google.common.base.Preconditions;
+import io.papermc.bosslibrary.keys.Keys;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
-public abstract class CustomBoss {
+public abstract class CustomBoss extends BaseEntity {
 
-    private final BossHealthManager healthManager = new BossHealthManager();
-    private final BossBehaviorManager behaviorManager = new BossBehaviorManager();
-    private final BossHealthBarManager healthBarManager;
-    private final BoneBuilder centralBone;
-    public final World world;
-    private Player nearestPlayer;
-    private boolean nearestPlayerHasBeenFound;
-    public String bossName;
+    private final PersistentDataContainer container = this.getTemplateEntity().getPersistentDataContainer();
+    private final BossBar bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);;
+    private String bossName;
+    public CustomBoss(Location location, double health) {
+        super(location);
 
-    public CustomBoss(Location spawnLocation, double health) {
-        this.centralBone = new BoneBuilder(spawnLocation);
-        this.world = this.getLocation().getWorld();
-        this.healthManager.setHealth(health);
-        this.healthBarManager = new BossHealthBarManager(this);
-
-        EntityScheduler scheduler = centralBone.getDisplay().getScheduler();
-        scheduler.runAtFixedRate(BossLibraryManager.getMainInstance(), scheduledTask -> update(), this::stop, 1, 1);
+        this.bossBar.addFlag(BarFlag.DARKEN_SKY);
+        this.setMaxHealth(health);
+        this.setHealth(health);
     }
 
-    public Location getLocation() {
-        return this.centralBone.getDisplay().getLocation();
+    public float getMaxHealth() {
+        return this.container.getOrDefault(Keys.BOSS_MAX_HEALTH, PersistentDataType.FLOAT, 0f);
     }
 
-    public void teleport(Location location) {
-        this.centralBone.teleport(location);
+    public float getHealth() {
+        return this.container.getOrDefault(Keys.BOSS_HEALTH, PersistentDataType.FLOAT, 0f);
     }
 
-    public BossHealthManager getHealthManager() {
-        return this.healthManager;
+    public void setMaxHealth(double health) {
+        this.container.set(Keys.BOSS_MAX_HEALTH, PersistentDataType.FLOAT, (float) health);
     }
 
-    public BossBehaviorManager getBehaviorManager() {
-        return this.behaviorManager;
-    }
+    public void setHealth(double health) {
+        Preconditions.checkArgument(health >= 0 && health <= this.getMaxHealth());
 
-    public Player getNearestPlayer() {
-        //Gets the nearest player only if it hasn't been found this tick
-        if (!nearestPlayerHasBeenFound) {
-            double nearestDistanceSquare = Double.MAX_VALUE;
-
-            for (Player player : world.getPlayers()) {
-                double distanceSquare = player.getLocation().distanceSquared(this.getLocation());
-                if (distanceSquare >= nearestDistanceSquare) {
-                    continue;
-                }
-                nearestDistanceSquare = distanceSquare;
-                this.nearestPlayer = player;
-            }
+        this.container.set(Keys.BOSS_HEALTH, PersistentDataType.FLOAT, (float) health);
+        if (this.getHealth() <= 0) {
+            this.remove();
         }
-
-        return nearestPlayer;
     }
 
+    public void damage(double damage) {
+        this.setHealth(this.getHealth() - damage);
+    }
+
+    public String getBossBarName() {
+        return this.bossName;
+    }
+
+    public void setBossBarName(String bossBarName) {
+        this.bossName = bossBarName;
+        this.bossBar.setTitle(this.bossName);
+    }
+
+    public BossBar getBossBar() {
+        return this.bossBar;
+    }
+
+    @Override
     public void update() {
-        this.nearestPlayerHasBeenFound = false;
-        this.behaviorManager.update();
-        this.healthBarManager.update();
-        this.tick();
+        BossBar bossBar = this.bossBar;
+        bossBar.setProgress(this.getHealth() / this.getMaxHealth());
+        for (Player player : this.getLocation().getWorld().getPlayers()) {
+            if (bossBar.getPlayers().contains(player)) {
+                continue;
+            }
+
+            bossBar.addPlayer(player);
+            this.tick();
+        }
     }
 
-    public void stop() {
-        this.centralBone.remove();
-        this.behaviorManager.stop();
-        this.healthBarManager.stopBossBar();
-        this.death();
+    @Override
+    public void remove() {
+        this.bossBar.removeAll();
+        super.remove();
     }
 
     public abstract void tick();
-
-    public abstract void death();
 
 }

@@ -20,22 +20,6 @@ dependencies {
 }
 ````
 
-plugin.yml
-````yml
-libraries:
-  - io.github.alejomc26:BossLibrarySource:1.2
-````
-
-Inside your onEnable method add 
-````java
-public void onEnable() {
-    BossLibraryManager.setPlugin(this)
-}
-````
-
-
-otherwise the library won't work correctly
-
 
 ## How to use
 Extending `CustomBoss` to a class grants you the tick and death methods, tick will be called every tick that the boss is alive, death will be called when the boss dies

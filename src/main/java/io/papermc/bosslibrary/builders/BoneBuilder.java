@@ -8,13 +8,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class BoneBuilder extends Matrix4fBuilder {
 
     private final ItemDisplay bone;
+    private final Location location;
     public BoneBuilder(Location location) {
-        this.bone = location.getWorld().spawn(location, ItemDisplay.class);
-        this.bone.setTeleportDuration(2);
+        this.bone = location.getWorld().spawn(location, ItemDisplay.class, (display) -> display.setTeleportDuration(2));
+        this.location = location;
     }
 
     public ItemDisplay getDisplay() {
         return this.bone;
+    }
+
+    public Location getLocation() {
+        this.bone.getLocation(location);
+        return location;
     }
 
     public void setModel(ItemStack itemStack, int customModelData) {

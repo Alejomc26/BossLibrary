@@ -1,0 +1,6 @@
+name: BossLibrary
+version: 1.3
+main: io.papermc.bosslibrary.BossLibrary
+description: Library to make bosses
+author: Alejomc26
+api-version: '1.20'

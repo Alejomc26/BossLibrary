@@ -1,23 +1,22 @@
 package io.papermc.bosslibrary.baseclasses;
 
-public abstract class CustomBehavior {
+public interface CustomBehavior {
 
-    private final CustomBoss boss;
-
-    public CustomBehavior(CustomBoss boss) {
-        this.boss = boss;
+    /**
+     * Called when the behavior starts
+     */
+    default void start() {
     }
 
-    public CustomBoss getBoss() {
-        return this.boss;
+    /**
+     * Called when the entity dies or despawn
+     */
+    default void cancel() {
     }
 
-    public void start() {
-    }
-
-    public void exit() {
-    }
-
-    public abstract void tick();
+    /**
+     * Called every tick that the entity is alive / loaded
+     */
+    void tick();
 
 }
