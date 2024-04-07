@@ -20,6 +20,10 @@ public abstract class CustomProjectile extends BaseEntity {
         this.contactDamage = contactDamage;
     }
 
+    public BoneBuilder getBoneBuilder() {
+        return display;
+    }
+
     @Override
     public void teleport(Location location) {
         this.display.teleport(location);

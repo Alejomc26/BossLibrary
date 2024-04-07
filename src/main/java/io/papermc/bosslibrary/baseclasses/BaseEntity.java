@@ -4,7 +4,6 @@ import io.papermc.bosslibrary.BossLibrary;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Location;
 import org.bukkit.entity.ItemDisplay;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class BaseEntity {
 

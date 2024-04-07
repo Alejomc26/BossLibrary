@@ -9,7 +9,7 @@ plugins {
 
 description = "Library for minecraft plugin developers (Paper api only)"
 group = "io.github.alejomc26"
-version = "1.2"
+version = "1.3"
 
 signing {
     useGpgCmd()
