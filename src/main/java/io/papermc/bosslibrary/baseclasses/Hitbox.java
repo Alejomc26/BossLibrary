@@ -1,11 +1,9 @@
 package io.papermc.bosslibrary.baseclasses;
 
-import io.papermc.bosslibrary.BossLibrary;
 import org.bukkit.Location;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
 
@@ -19,7 +17,7 @@ public final class Hitbox extends CustomEntityImpl {
     private final Boss boss;
     private int immunityFrames;
     private double damageReduction = 0;
-    public Hitbox(JavaPlugin main, Location location, Boss boss) {
+    public Hitbox(Location location, Boss boss) {
         super(location, null);
 
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, (interaction) -> interaction.setResponsive(true));

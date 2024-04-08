@@ -5,7 +5,6 @@ import io.papermc.bosslibrary.interfaces.CustomBehavior;
 import io.papermc.bosslibrary.interfaces.CustomEntity;
 import org.bukkit.Location;
 import org.bukkit.entity.ItemDisplay;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Implementation class of custom entity and a base for other custom entities

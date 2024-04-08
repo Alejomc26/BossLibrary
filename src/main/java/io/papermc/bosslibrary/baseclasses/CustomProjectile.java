@@ -1,13 +1,11 @@
 package io.papermc.bosslibrary.baseclasses;
 
-import io.papermc.bosslibrary.BossLibrary;
 import io.papermc.bosslibrary.builders.BoneBuilder;
 import io.papermc.bosslibrary.interfaces.CustomBehavior;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.Consumer;
 
@@ -21,7 +19,7 @@ public final class CustomProjectile extends CustomEntityImpl {
     private double contactDamage = 1;
     private double attackRadius = 0.4;
     private Consumer<CustomProjectile> onTouchFunction;
-    public CustomProjectile(JavaPlugin main, Location location, CustomBehavior mainBehavior) {
+    public CustomProjectile(Location location, CustomBehavior mainBehavior) {
         super(location, mainBehavior);
 
         this.display = new BoneBuilder(location);

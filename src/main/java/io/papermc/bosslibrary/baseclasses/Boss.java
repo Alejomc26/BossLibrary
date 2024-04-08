@@ -1,7 +1,6 @@
 package io.papermc.bosslibrary.baseclasses;
 
 import com.google.common.base.Preconditions;
-import io.papermc.bosslibrary.BossLibrary;
 import io.papermc.bosslibrary.interfaces.CustomBehavior;
 import io.papermc.bosslibrary.keys.Keys;
 import org.bukkit.Bukkit;
@@ -12,7 +11,6 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Represents a boss from BossLibrary
@@ -23,7 +21,7 @@ public final class Boss extends CustomEntityImpl {
     private final BossBar bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
     private int immunityFrames = 10;
     private String bossName;
-    public Boss(JavaPlugin main, Location location, CustomBehavior mainBehavior, double health) {
+    public Boss(Location location, CustomBehavior mainBehavior, double health) {
         super(location, mainBehavior);
 
         this.setMaxHealth(health);
