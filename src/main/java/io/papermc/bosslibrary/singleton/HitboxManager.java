@@ -1,6 +1,6 @@
 package io.papermc.bosslibrary.singleton;
 
-import io.papermc.bosslibrary.baseclasses.CustomHitbox;
+import io.papermc.bosslibrary.baseclasses.Hitbox;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class HitboxManager {
 
-    private final Map<UUID, CustomHitbox> hitboxList = new HashMap<>();
+    private final Map<UUID, Hitbox> hitboxList = new HashMap<>();
     private static HitboxManager instance = null;
     private HitboxManager() {}
 
@@ -19,11 +19,11 @@ public class HitboxManager {
         return instance;
     }
 
-    public void registerHitbox(CustomHitbox hitbox) {
+    public void registerHitbox(Hitbox hitbox) {
         this.hitboxList.put(hitbox.getInteractionEntity().getUniqueId(), hitbox);
     }
 
-    public CustomHitbox getHitbox(UUID uuid) {
+    public Hitbox getHitbox(UUID uuid) {
         return hitboxList.get(uuid);
     }
 

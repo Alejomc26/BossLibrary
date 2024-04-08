@@ -9,7 +9,7 @@ plugins {
 
 description = "Library for minecraft plugin developers (Paper api only)"
 group = "io.github.alejomc26"
-version = "1.3"
+version = "1.41"
 
 signing {
     useGpgCmd()
@@ -58,13 +58,9 @@ centralPortal {
 
     jarTask = tasks.jar
 
-    sourcesJarTask = tasks.create<Jar>("sourcesEmptyJar"){
-        archiveClassifier = "sources"
-    }
+    sourcesJarTask = tasks.sourcesJar
 
-    javadocJarTask = tasks.create<Jar>("javadocEmptyJar") {
-        archiveClassifier = "javadoc"
-    }
+    javadocJarTask = tasks.javadocJar
 
     pom {
         url = "https://github.com/Alejomc26/BossLibrary"

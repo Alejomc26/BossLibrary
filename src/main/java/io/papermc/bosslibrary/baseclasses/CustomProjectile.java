@@ -1,48 +1,101 @@
 package io.papermc.bosslibrary.baseclasses;
 
+import io.papermc.bosslibrary.BossLibrary;
 import io.papermc.bosslibrary.builders.BoneBuilder;
+import io.papermc.bosslibrary.interfaces.CustomBehavior;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class CustomProjectile extends BaseEntity {
+import java.util.function.Consumer;
+
+/**
+ * Represents a projectile from BossLibrary
+ */
+public final class CustomProjectile extends CustomEntityImpl {
 
     private final Location spawnLocation;
     private final BoneBuilder display;
-    private final double contactDamage;
+    private double contactDamage = 1;
     private double attackRadius = 0.4;
-    public CustomProjectile(Location location, double contactDamage) {
-        super(location);
+    private Consumer<CustomProjectile> onTouchFunction;
+    public CustomProjectile(JavaPlugin main, Location location, CustomBehavior mainBehavior) {
+        super(location, mainBehavior);
 
         this.display = new BoneBuilder(location);
         this.spawnLocation = location.clone();
-        this.contactDamage = contactDamage;
-    }
-
-    public BoneBuilder getBoneBuilder() {
-        return display;
     }
 
     @Override
     public void teleport(Location location) {
-        this.display.teleport(location);
         super.teleport(location);
+        this.display.teleport(location);
     }
 
     @Override
     public void remove() {
-        this.display.remove();
         super.remove();
+        this.display.remove();
+    }
+
+    /**
+     * Gets the bone builder of the projectile, useful for 3d models
+     * @return bone builder
+     */
+    public BoneBuilder getBoneBuilder() {
+        return display;
+    }
+
+    /**
+     * Gets the attack radius of the projectile
+     * @return attack radius
+     */
+    public double getAttackRadius() {
+        return attackRadius;
+    }
+
+    /**
+     * Sets the attack radius of the projectile, this is basically a hitbox size
+     * @param radius new attack radius
+     */
+    public void setAttackRadius(double radius) {
+        this.attackRadius = radius;
+    }
+
+    /**
+     * Gets the projectile contact damage
+     * @return contact damage
+     */
+    public double getContactDamage() {
+        return this.contactDamage;
+    }
+
+    /**
+     * Sets the projectile contact damage, any entity near enough to the projectile will
+     * receive this damage after the damage formula is applied
+     * @param contactDamage new contact damage
+     */
+    public void setContactDamage(double contactDamage) {
+        this.contactDamage = contactDamage;
+    }
+
+    /**
+     * Sets a function that will be called if the projectile touches a block
+     * @param function function
+     */
+    public void setTouchBlockFunction(Consumer<CustomProjectile> function) {
+        this.onTouchFunction = function;
     }
 
     @Override
-    public void update() {
+    protected void tick() {
         Location currentLocation = this.getLocation();
         Block block = currentLocation.getBlock();
 
         if (block.getType() != Material.AIR) {
-            this.touchBlock();
+            if (this.onTouchFunction != null) this.onTouchFunction.accept(this);
             this.remove();
             return;
         }
@@ -55,16 +108,5 @@ public abstract class CustomProjectile extends BaseEntity {
         for (Player player : currentLocation.getNearbyPlayers(this.attackRadius)) {
             player.damage(this.contactDamage);
         }
-
-        this.tick();
     }
-
-    public void setAttackRadius(double radius) {
-        this.attackRadius = radius;
-    }
-
-    public abstract void tick();
-
-    public abstract void touchBlock();
-
 }

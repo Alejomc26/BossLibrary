@@ -5,7 +5,10 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class BoneBuilder extends Matrix4fBuilder {
+/**
+ * Represents a bone, you can put custom model data in it and make a 3D model
+ */
+public final class BoneBuilder extends Matrix4fBuilder {
 
     private final ItemDisplay bone;
     private final Location location;

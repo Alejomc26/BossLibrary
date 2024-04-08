@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BossLibrary extends JavaPlugin {
 
-    private static BossLibrary instance = null;
+    private static BossLibrary instance;
     @Override
     public void onEnable() {
         instance = this;

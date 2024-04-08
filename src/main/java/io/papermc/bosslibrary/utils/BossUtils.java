@@ -9,10 +9,12 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 
+/**
+ * Utils class for anyone using BossLibrary
+ */
 public class BossUtils {
 
     public static Player getNearestPlayer(Location location) {
-        //Gets the nearest player only if it hasn't been found this tick
         Player nearestPlayer = null;
         double nearestDistanceSquare = Double.MAX_VALUE;
 

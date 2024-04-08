@@ -1,6 +1,6 @@
 package io.papermc.bosslibrary.listener;
 
-import io.papermc.bosslibrary.baseclasses.CustomHitbox;
+import io.papermc.bosslibrary.baseclasses.Hitbox;
 import io.papermc.bosslibrary.singleton.HitboxManager;
 import io.papermc.bosslibrary.utils.BossUtils;
 import org.bukkit.entity.Interaction;
@@ -14,8 +14,8 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void hitboxDamageListener(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Interaction interaction && event.getDamager() instanceof Player player) {
-            CustomHitbox hitbox = HitboxManager.getInstance().getHitbox(interaction.getUniqueId());
-            if (hitbox != null && hitbox.getIframes() <= 0) {
+            Hitbox hitbox = HitboxManager.getInstance().getHitbox(interaction.getUniqueId());
+            if (hitbox != null && hitbox.getImmunityFrames() <= 0) {
                 hitbox.getBoss().damage(BossUtils.getPlayerDamage(player));
             }
         }

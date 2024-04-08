@@ -9,14 +9,14 @@ Maven
 <dependency>
     <groupId>io.github.alejomc26</groupId>
     <artifactId>BossLibrarySource</artifactId>
-    <version>1.3</version>
+    <version>1.41</version>
 </dependency>
 ````
 
 Gradle
 ````gradle
 dependencies {
-    implementation("io.github.alejomc26:BossLibrarySource:1.3")
+    implementation("io.github.alejomc26:BossLibrarySource:1.41")
 }
 ````
 
