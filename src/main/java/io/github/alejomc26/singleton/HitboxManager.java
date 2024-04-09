@@ -1,6 +1,6 @@
-package io.papermc.bosslibrary.singleton;
+package io.github.alejomc26.singleton;
 
-import io.papermc.bosslibrary.baseclasses.Hitbox;
+import io.github.alejomc26.baseclasses.Hitbox;
 
 import java.util.HashMap;
 import java.util.Map;

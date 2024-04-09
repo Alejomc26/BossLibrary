@@ -1,6 +1,6 @@
-package io.papermc.bosslibrary.baseclasses;
+package io.github.alejomc26.baseclasses;
 
-import io.papermc.bosslibrary.builders.BoneBuilder;
+import io.github.alejomc26.bone.Bone;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,14 +14,14 @@ import java.util.function.Consumer;
 public final class CustomProjectile extends CustomEntityImpl {
 
     private final Location spawnLocation;
-    private final BoneBuilder display;
+    private final Bone display;
     private double contactDamage = 1;
     private double attackRadius = 0.4;
     private Consumer<CustomProjectile> onTouchFunction;
     public CustomProjectile(Location location) {
         super(location);
 
-        this.display = new BoneBuilder(location);
+        this.display = new Bone(location);
         this.spawnLocation = location.clone();
     }
 
@@ -41,7 +41,7 @@ public final class CustomProjectile extends CustomEntityImpl {
      * Gets the bone builder of the projectile, useful for 3d models
      * @return bone builder
      */
-    public BoneBuilder getBoneBuilder() {
+    public Bone getBoneBuilder() {
         return display;
     }
 

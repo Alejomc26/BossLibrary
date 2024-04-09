@@ -1,6 +1,6 @@
-package io.papermc.bosslibrary;
+package io.github.alejomc26;
 
-import io.papermc.bosslibrary.listener.PlayerListener;
+import io.github.alejomc26.listener.BossLibraryListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BossLibrary extends JavaPlugin {
@@ -9,7 +9,7 @@ public class BossLibrary extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BossLibraryListener(), this);
     }
 
     public static BossLibrary getInstance() {

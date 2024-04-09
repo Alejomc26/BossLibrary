@@ -1,4 +1,4 @@
-package io.papermc.bosslibrary.builders;
+package io.github.alejomc26.bone;
 
 import org.bukkit.Location;
 import org.bukkit.entity.ItemDisplay;
@@ -8,11 +8,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * Represents a bone, you can put custom model data in it and make a 3D model
  */
-public final class BoneBuilder extends Matrix4fBuilder {
+public class Bone {
 
-    private final ItemDisplay bone;
-    public BoneBuilder(Location location) {
-        this.bone = location.getWorld().spawn(location, ItemDisplay.class, (display) -> display.setTeleportDuration(2));
+    private final ItemDisplay display;
+    public Bone(Location location) {
+        this.display = location.getWorld().spawn(location, ItemDisplay.class, (display) -> display.setTeleportDuration(2));
     }
 
     /**
@@ -20,7 +20,7 @@ public final class BoneBuilder extends Matrix4fBuilder {
      * @return BoneBuilder display
      */
     public ItemDisplay getDisplay() {
-        return this.bone;
+        return this.display;
     }
 
     /**
@@ -28,7 +28,7 @@ public final class BoneBuilder extends Matrix4fBuilder {
      * @return BoneBuilder location
      */
     public Location getLocation() {
-        return this.bone.getLocation();
+        return this.display.getLocation();
     }
 
     /**
@@ -41,7 +41,7 @@ public final class BoneBuilder extends Matrix4fBuilder {
         meta.setCustomModelData(customModelData);
 
         itemStack.setItemMeta(meta);
-        this.bone.setItemStack(itemStack);
+        this.display.setItemStack(itemStack);
     }
 
     /**
@@ -49,13 +49,13 @@ public final class BoneBuilder extends Matrix4fBuilder {
      * @param location Teleport location
      */
     public void teleport(Location location) {
-        this.bone.teleport(location);
+        this.display.teleport(location);
     }
 
     /**
      * Remove the BoneBuilder
      */
     public void remove() {
-        this.bone.remove();
+        this.display.remove();
     }
 }

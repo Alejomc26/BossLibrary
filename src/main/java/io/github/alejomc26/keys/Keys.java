@@ -1,4 +1,4 @@
-package io.papermc.bosslibrary.keys;
+package io.github.alejomc26.keys;
 
 import org.bukkit.NamespacedKey;
 

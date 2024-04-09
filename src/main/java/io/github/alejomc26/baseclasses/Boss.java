@@ -1,7 +1,7 @@
-package io.papermc.bosslibrary.baseclasses;
+package io.github.alejomc26.baseclasses;
 
 import com.google.common.base.Preconditions;
-import io.papermc.bosslibrary.keys.Keys;
+import io.github.alejomc26.keys.Keys;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;

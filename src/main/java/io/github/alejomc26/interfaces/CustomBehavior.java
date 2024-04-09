@@ -1,4 +1,4 @@
-package io.papermc.bosslibrary.interfaces;
+package io.github.alejomc26.interfaces;
 
 /**
  * This class represents a BossLibrary behavior

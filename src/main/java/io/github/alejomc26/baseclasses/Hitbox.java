@@ -1,5 +1,7 @@
-package io.papermc.bosslibrary.baseclasses;
+package io.github.alejomc26.baseclasses;
 
+import io.github.alejomc26.baseclasses.Boss;
+import io.github.alejomc26.baseclasses.CustomEntityImpl;
 import org.bukkit.Location;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
@@ -24,6 +26,12 @@ public final class Hitbox extends CustomEntityImpl {
         this.boss = boss;
 
         this.immunityFrames = boss.getImmunityFrames();
+    }
+
+    @Override
+    public void teleport(Location location) {
+        super.teleport(location);
+        this.interactionEntity.teleport(location);
     }
 
     /**

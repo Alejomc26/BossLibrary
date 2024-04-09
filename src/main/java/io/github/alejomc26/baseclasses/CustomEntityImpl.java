@@ -1,8 +1,8 @@
-package io.papermc.bosslibrary.baseclasses;
+package io.github.alejomc26.baseclasses;
 
-import io.papermc.bosslibrary.BossLibrary;
-import io.papermc.bosslibrary.interfaces.CustomBehavior;
-import io.papermc.bosslibrary.interfaces.CustomEntity;
+import io.github.alejomc26.BossLibrary;
+import io.github.alejomc26.interfaces.CustomBehavior;
+import io.github.alejomc26.interfaces.CustomEntity;
 import org.bukkit.Location;
 import org.bukkit.entity.ItemDisplay;
 
@@ -16,6 +16,7 @@ public abstract class CustomEntityImpl implements CustomEntity {
     public CustomEntityImpl(Location location) {
         this.templateEntity = location.getWorld().spawn(location, ItemDisplay.class, (display) -> {
 
+            display.setTeleportDuration(2);
             display.getScheduler().runAtFixedRate(BossLibrary.getInstance(), scheduledTask -> {
 
                 this.tick();

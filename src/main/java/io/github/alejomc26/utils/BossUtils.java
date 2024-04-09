@@ -1,4 +1,4 @@
-package io.papermc.bosslibrary.utils;
+package io.github.alejomc26.utils;
 
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
