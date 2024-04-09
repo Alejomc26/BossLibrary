@@ -18,7 +18,7 @@ public final class Hitbox extends CustomEntityImpl {
     private int immunityFrames;
     private double damageReduction = 0;
     public Hitbox(Location location, Boss boss) {
-        super(location, null);
+        super(location);
 
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, (interaction) -> interaction.setResponsive(true));
         this.boss = boss;

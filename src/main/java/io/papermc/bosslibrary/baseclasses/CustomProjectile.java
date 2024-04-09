@@ -1,7 +1,6 @@
 package io.papermc.bosslibrary.baseclasses;
 
 import io.papermc.bosslibrary.builders.BoneBuilder;
-import io.papermc.bosslibrary.interfaces.CustomBehavior;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,8 +18,8 @@ public final class CustomProjectile extends CustomEntityImpl {
     private double contactDamage = 1;
     private double attackRadius = 0.4;
     private Consumer<CustomProjectile> onTouchFunction;
-    public CustomProjectile(Location location, CustomBehavior mainBehavior) {
-        super(location, mainBehavior);
+    public CustomProjectile(Location location) {
+        super(location);
 
         this.display = new BoneBuilder(location);
         this.spawnLocation = location.clone();

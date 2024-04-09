@@ -1,5 +1,5 @@
 name: BossLibrary
-version: 1.42
+version: 1.43
 main: io.papermc.bosslibrary.BossLibrary
 description: Library to make bosses
 author: Alejomc26

@@ -13,19 +13,16 @@ public abstract class CustomEntityImpl implements CustomEntity {
 
     private final ItemDisplay templateEntity;
     private CustomBehavior behavior;
-    public CustomEntityImpl(Location location, CustomBehavior mainBehavior) {
+    public CustomEntityImpl(Location location) {
         this.templateEntity = location.getWorld().spawn(location, ItemDisplay.class, (display) -> {
 
-            mainBehavior.start();
             display.getScheduler().runAtFixedRate(BossLibrary.getInstance(), scheduledTask -> {
 
-                mainBehavior.tick();
                 this.tick();
                 if (this.behavior != null) behavior.tick();
 
             }, () -> {
 
-                mainBehavior.cancel();
                 if (this.behavior != null) behavior.cancel();
                 this.remove();
 

@@ -33,7 +33,7 @@ All the important classes extend ``BaseEntity`` so here is that class in a nutsh
 
 # How to create a boss
 
-- Extend ``CustomBoss`` and set the spawn location and health
+- Construct a Boss somewhere
 - Construct a hitbox using ``CustomHitbox`` and make that it teleports with the boss 
 - Do something in the tick method
 - Make a class that implements ``CustomBehavior`` and do something there
