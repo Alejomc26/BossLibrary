@@ -16,7 +16,7 @@ Maven
 Gradle
 ````gradle
 dependencies {
-    implementation("io.github.alejomc26:BossLibrarySource:1.42")
+    compileOnly("io.github.alejomc26:BossLibrarySource:1.42")
 }
 ````
 
