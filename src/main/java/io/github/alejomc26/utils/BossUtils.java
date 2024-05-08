@@ -6,6 +6,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 
@@ -42,20 +43,32 @@ public class BossUtils {
         return start + (end - start) * percent;
     }
 
-    public static float getPlayerDamage(Player player) {
+    public static double getPlayerDamage(Player player) {
         AttributeInstance attackDamageInstance = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-        float baseDamage = (attackDamageInstance != null) ? (float) attackDamageInstance.getValue() : 0;
-        float attackCooldown = player.getAttackCooldown();
-        float enchantmentBonus = 0;
-
-        for (Map.Entry<Enchantment, Integer> enchantment : player.getInventory().getItemInMainHand().getEnchantments().entrySet()) {
-            enchantmentBonus += enchantment.getKey().getDamageIncrease(enchantment.getValue(), EntityCategory.NONE);
+        if (attackDamageInstance == null) {
+            return 0.0;
         }
+        float attackCooldown = player.getAttackCooldown();
+        float enchantmentDamageBonus = getItemEnchantmentBonus(player.getInventory().getItemInMainHand());
+        boolean isCritical = attackCooldown > 0.9 && player.getFallDistance() > 0 && !player.isClimbing() && !player.isInWater();
 
-        baseDamage *= 0.2 + attackCooldown * attackCooldown * 0.8;
-        baseDamage *= (attackCooldown > 0.9 && player.getFallDistance() > 0 && !player.isClimbing() && !player.isInWater()) ? 1.5 : 1;
-        baseDamage += enchantmentBonus;
+        return getPlayerDamage(attackDamageInstance.getValue(), attackCooldown, enchantmentDamageBonus, isCritical);
+    }
 
-        return baseDamage;
+    public static float getItemEnchantmentBonus(ItemStack itemStack) {
+        float enchantmentDamageBonus = 0;
+        for (Map.Entry<Enchantment, Integer> enchantment : itemStack.getEnchantments().entrySet()) {
+            enchantmentDamageBonus += enchantment.getKey().getDamageIncrease(enchantment.getValue(), EntityCategory.NONE);
+        }
+        return enchantmentDamageBonus;
+    }
+
+    public static double getPlayerDamage(double baseDamage, float attackCooldown, float enchantmentDamageBonus, boolean isCritical) {
+        double attackCooldownMultiplier = 0.2 + attackCooldown * attackCooldown * 0.8;
+        double damage = baseDamage * attackCooldownMultiplier;
+        if (isCritical) {
+            damage *= 1.5;
+        }
+        return damage + enchantmentDamageBonus;
     }
 }

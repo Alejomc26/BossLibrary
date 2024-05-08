@@ -1,4 +1,6 @@
-package io.github.alejomc26.interfaces;
+package io.github.alejomc26.behavior;
+
+import org.bukkit.entity.Entity;
 
 /**
  * This class represents a BossLibrary behavior
@@ -6,8 +8,7 @@ package io.github.alejomc26.interfaces;
 public interface CustomBehavior {
 
     /**
-     * Called when the behavior is applied, useful for declaring
-     * variables
+     * Called when the behavior is applied to an {@link Entity}
      */
     default void start() {
     }
@@ -22,4 +23,11 @@ public interface CustomBehavior {
      * Called every tick that the entity is loaded
      */
     void tick();
+
+    /**
+     * Called if the entity dies while the behavior is active
+     */
+    default void death() {
+    }
+
 }
